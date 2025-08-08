@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "316157333598",
+    "project_id": "precesion-f73f6",
+    "storage_bucket": "precesion-f73f6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316157333598:android:e23ecf17a92dadb02064cf",
+        "android_client_info": {
+          "package_name": "com.example.new_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwVVFssdXJRuKRaw4kDMdY_37snJV2BOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
