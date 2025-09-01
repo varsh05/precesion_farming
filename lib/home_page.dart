@@ -1,20 +1,55 @@
 import 'package:flutter/material.dart';
+import 'settings_page.dart';
+import 'disease_predictor_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+  Widget _buildDashboardCard(String title, IconData icon, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: Colors.green[100],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 40, color: Colors.green[800]),
+              const SizedBox(height: 10),
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.green[900],
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[50],
       appBar: AppBar(
-        title: const Text("Smart Farming Dashboard"),
-        backgroundColor: Colors.green[700],
+        title: const Text('Smart Farming Dashboard'),
+        backgroundColor: Colors.green,
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              // Navigate to Settings page if needed
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const SettingsPage()),
+              );
             },
           ),
         ],
@@ -25,61 +60,24 @@ class HomePage extends StatelessWidget {
           crossAxisCount: 2,
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
-          children: const [
-            _DashboardCard(
-              icon: Icons.biotech,
-              title: "ML Plant Disease\nPrediction",
-            ),
-            _DashboardCard(icon: Icons.sensors, title: "IoT Sensor\nValues"),
-            _DashboardCard(icon: Icons.cloud, title: "Weather\nReporter"),
-            _DashboardCard(
-              icon: Icons.agriculture,
-              title: "Crop Suggestion\nModel",
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _DashboardCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-
-  const _DashboardCard({required this.icon, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.green[100],
-      elevation: 4,
-      borderRadius: BorderRadius.circular(16),
-      child: InkWell(
-        onTap: () {
-          // Add your onTap functionality or page navigation
-        },
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 40, color: Colors.green[900]),
-              const SizedBox(height: 10),
-              Flexible(
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14.5,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.green[900],
-                  ),
+          children: [
+            _buildDashboardCard("ML Disease Predictor", Icons.biotech, () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const DiseasePredictorPage(),
                 ),
-              ),
-            ],
-          ),
+              );
+            }),
+            _buildDashboardCard("IoT Sensor Values", Icons.sensors, () {
+              // Navigate to IoT Sensor Page
+            }),
+            _buildDashboardCard("Weather Reporter", Icons.cloud, () {
+              // Navigate to Weather Page
+            }),
+            _buildDashboardCard("Crop Suggestion", Icons.agriculture, () {
+              // Navigate to Crop Suggestion Page
+            }),
+          ],
         ),
       ),
     );
