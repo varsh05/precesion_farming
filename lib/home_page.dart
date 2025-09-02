@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'settings_page.dart';
 import 'disease_predictor_page.dart';
+import 'weather_forcasting.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
   Widget _buildDashboardCard(String title, IconData icon, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
@@ -69,13 +69,17 @@ class HomePage extends StatelessWidget {
               );
             }),
             _buildDashboardCard("IoT Sensor Values", Icons.sensors, () {
-              // Navigate to IoT Sensor Page
+              // Navigate to IoT Sensor Page (to be added later)
             }),
             _buildDashboardCard("Weather Reporter", Icons.cloud, () {
-              // Navigate to Weather Page
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => WeatherForcasting(), // ✅ Connected
+                ),
+              );
             }),
             _buildDashboardCard("Crop Suggestion", Icons.agriculture, () {
-              // Navigate to Crop Suggestion Page
+              // Navigate to Crop Suggestion Page (to be added later)
             }),
           ],
         ),
