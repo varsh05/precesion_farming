@@ -2,9 +2,40 @@ import 'package:flutter/material.dart';
 import 'settings_page.dart';
 import 'disease_predictor_page.dart';
 import 'weather_forcasting.dart';
+import 'bot.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    )..repeat(reverse: true);
+
+    _animation = Tween<double>(begin: 0.0, end: -15.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   Widget _buildDashboardCard(String title, IconData icon, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
@@ -73,9 +104,7 @@ class HomePage extends StatelessWidget {
             }),
             _buildDashboardCard("Weather Reporter", Icons.cloud, () {
               Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => WeatherForcasting(), // ✅ Connected
-                ),
+                MaterialPageRoute(builder: (context) => WeatherForcasting()),
               );
             }),
             _buildDashboardCard("Crop Suggestion", Icons.agriculture, () {
@@ -83,6 +112,23 @@ class HomePage extends StatelessWidget {
             }),
           ],
         ),
+      ),
+      floatingActionButton: AnimatedBuilder(
+        animation: _animationController,
+        builder: (context, child) {
+          return Transform.translate(
+            offset: Offset(0, _animation.value),
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const BotScreen()),
+                );
+              },
+              backgroundColor: Colors.green,
+              child: const Icon(Icons.smart_toy, color: Colors.white),
+            ),
+          );
+        },
       ),
     );
   }
